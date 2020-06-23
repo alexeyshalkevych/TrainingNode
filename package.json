@@ -1,0 +1,30 @@
+{
+  "name": "node-basics",
+  "version": "1.0.0",
+  "description": "Learn node basics",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexeyshalkevych/TrainingNode.git"
+  },
+  "keywords": [
+    "javascript",
+    "node"
+  ],
+  "author": "Aleksey Shalkevych <aleksey.shalkevych@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexeyshalkevych/TrainingNode/issues"
+  },
+  "homepage": "https://github.com/alexeyshalkevych/TrainingNode#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "yargs": "^15.3.1"
+  }
+}
