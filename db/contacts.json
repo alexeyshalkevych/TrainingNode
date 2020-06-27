@@ -1,10 +1,9 @@
 [
-  { "id": 1, "name": "Test", "email": "test@gmail.com", "phone": "789-45-69" },
   {
-    "id": 4,
-    "name": "Wylie Pope",
-    "email": "est@utquamvel.net",
-    "phone": "(692) 802-2949"
+    "id": 1,
+    "name": "Elon Musk",
+    "email": "venom@gmail.com",
+    "phone": "111-11-11"
   },
   {
     "id": 5,
@@ -53,5 +52,11 @@
     "name": "Alex",
     "email": "alexCode@gmial.com",
     "phone": "424-24-42"
+  },
+  {
+    "id": "68ce097e-ee97-4c43-a4be-7c535d4ce712",
+    "name": "Inna",
+    "email": "inna@gmial.com",
+    "phone": "333-22-11"
   }
 ]
