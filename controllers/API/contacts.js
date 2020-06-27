@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { v4: uuidv4 } = require("uuid");
 const {
   listContacts,
   getContactById,
@@ -23,6 +24,25 @@ router.get("/api/contacts/:contactId", async (req, res) => {
   }
 
   return res.status(200).send(contactWithId);
+});
+
+router.post("/api/contacts", async (req, res) => {
+  const { name, email, phone } = req.body;
+
+  if (!name || !email || !phone) {
+    return res.status(400).send({ message: "missing required name field" });
+  }
+
+  const contact = {
+    id: uuidv4(),
+    name,
+    email,
+    phone,
+  };
+
+  const result = await addContact(contact);
+
+  return res.status(201).send(result);
 });
 
 module.exports = router;

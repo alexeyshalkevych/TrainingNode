@@ -44,24 +44,18 @@ async function removeContact(contactId) {
   }
 }
 
-async function addContact(name, email, phone) {
-  if (!name && !email && !phone) return;
-
-  const newContact = {
-    id: Date.now(),
-    name,
-    email,
-    phone,
-  };
+async function addContact(contact) {
+  if (!contact) return;
 
   try {
     const data = await promises.readFile(contactsPath, "utf-8");
-    const dataWithNewContact = [...JSON.parse(data), newContact];
+    const dataWithNewContact = [...JSON.parse(data), contact];
 
     await promises.writeFile(contactsPath, JSON.stringify(dataWithNewContact));
 
-    console.log("Contact has been created");
-    console.table(dataWithNewContact);
+    const newData = await promises.readFile(contactsPath, "utf-8");
+
+    return findContact(newData, contact.id);
   } catch (error) {
     console.log(error);
   }
