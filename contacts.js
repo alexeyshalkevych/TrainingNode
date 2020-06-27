@@ -7,7 +7,7 @@ async function listContacts() {
   try {
     const data = await promises.readFile(contactsPath, "utf-8");
 
-    console.table(JSON.parse(data));
+    return JSON.parse(data);
   } catch (error) {
     console.log(error);
   }
@@ -20,7 +20,7 @@ async function getContactById(contactId) {
     const data = await promises.readFile(contactsPath, "utf-8");
     const contactWithId = searchContactWithId(contactId, data);
 
-    console.table(contactWithId);
+    return contactWithId;
   } catch (error) {
     console.log(error);
   }
