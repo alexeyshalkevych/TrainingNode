@@ -36,9 +36,7 @@ async function removeContact(contactId) {
 
     await promises.writeFile(contactsPath, JSON.stringify(newContacts));
 
-    console.log(`Contact with id ${contactId} has been deleted`);
-    console.table(contactWithId);
-    console.table(newContacts);
+    return contactWithId;
   } catch (error) {
     console.log(error);
   }

@@ -45,4 +45,16 @@ router.post("/api/contacts", async (req, res) => {
   return res.status(201).send(result);
 });
 
+router.delete("/api/contacts/:contactId", async (req, res) => {
+  const id = parseInt(req.params.contactId);
+
+  const contact = await removeContact(id);
+
+  if (!contact) {
+    return res.status(404).send({ message: "Not found" });
+  }
+
+  return res.status(200).send({ message: "contact deleted" });
+});
+
 module.exports = router;
