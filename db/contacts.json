@@ -1,10 +1,5 @@
 [
-  {
-    "id": 1,
-    "name": "Allen Raymond",
-    "email": "nulla.ante@vestibul.co.uk",
-    "phone": "(992) 914-3792"
-  },
+  { "id": 1, "name": "Test", "email": "test@gmail.com", "phone": "789-45-69" },
   {
     "id": 4,
     "name": "Wylie Pope",

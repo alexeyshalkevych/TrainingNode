@@ -6,6 +6,7 @@ const {
   getContactById,
   removeContact,
   addContact,
+  updateContact,
 } = require("../../contacts");
 
 router.get("/api/contacts", async (req, res) => {
@@ -55,6 +56,22 @@ router.delete("/api/contacts/:contactId", async (req, res) => {
   }
 
   return res.status(200).send({ message: "contact deleted" });
+});
+
+router.patch("/api/contacts/:contactId", async (req, res) => {
+  if (!Object.keys(req.body).length) {
+    return res.status(400).send({ message: "missing fields" });
+  }
+
+  const id = parseInt(req.params.contactId);
+
+  const contact = await updateContact(id, req.body);
+
+  if (!contact) {
+    return res.status(404).send({ message: "Not found" });
+  }
+
+  return res.status(200).send(contact);
 });
 
 module.exports = router;

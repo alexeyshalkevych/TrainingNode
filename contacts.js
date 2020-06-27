@@ -34,9 +34,33 @@ async function removeContact(contactId) {
     const contactWithId = searchContactWithId(contactId, data);
     const newContacts = filteredContacts(data, contactId);
 
-    await promises.writeFile(contactsPath, JSON.stringify(newContacts));
+    if (contactWithId) {
+      await promises.writeFile(contactsPath, JSON.stringify(newContacts));
+    }
 
     return contactWithId;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function updateContact(contactId, body) {
+  if (!contactId || !body) return;
+
+  try {
+    const data = await promises.readFile(contactsPath, "utf-8");
+    const contactWithId = searchContactWithId(contactId, data);
+
+    if (!contactWithId) return null;
+
+    const newContacts = updateContacts(data, contactId, body);
+
+    await promises.writeFile(contactsPath, JSON.stringify(newContacts));
+
+    const newData = await promises.readFile(contactsPath, "utf-8");
+    const updateContactWithId = searchContactWithId(contactId, newData);
+
+    return updateContactWithId;
   } catch (error) {
     console.log(error);
   }
@@ -57,6 +81,12 @@ async function addContact(contact) {
   } catch (error) {
     console.log(error);
   }
+}
+
+function updateContacts(contacts, contactId, body) {
+  return JSON.parse(contacts).map((contact) =>
+    contact.id === contactId ? { ...contact, ...body } : contact
+  );
 }
 
 function searchContactWithId(contactId, data) {
@@ -83,4 +113,5 @@ module.exports = {
   getContactById,
   removeContact,
   addContact,
+  updateContact,
 };
