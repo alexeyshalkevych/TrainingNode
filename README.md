@@ -1,10 +1,16 @@
 # TrainingNode
 
-## Learn node basics
+## Learn node express
 
-### Links for checks node-basics tasks
+### Links for checks node-express tasks
 
-[Get contacts list](https://prnt.sc/t53x9y)
-[Get contact with id](https://prnt.sc/t53yo7)
-[Create new contact](https://prnt.sc/t53zbo)
-[Remove contact](https://prnt.sc/t53zyp)
+- [@ GET /api/contacts](https://prnt.sc/t7gbt1)
+- [@ GET /api/contacts/:contactId](https://prnt.sc/t7gce8)
+- [@ GET /api/contacts/:contactId with error ID](https://prnt.sc/t7gcqd)
+- [@ POST /api/contacts](https://prnt.sc/t7gehj)
+- [@ POST /api/contacts with errors](https://prnt.sc/t7gf4s)
+- [@ DELETE /api/contacts/:contactId](https://prnt.sc/t7gfoo)
+- [@ DELETE /api/contacts/:contactId with errors](https://prnt.sc/t7gg14)
+- [@ PATCH /api/contacts/:contactId](https://prnt.sc/t7gidv)
+- [@ PATCH /api/contacts/:contactId with errors missing fields](https://prnt.sc/t7ghdh)
+- [@ PATCH /api/contacts/:contactId with errors not found](https://prnt.sc/t7ghu5)

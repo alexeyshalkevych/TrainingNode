@@ -7,7 +7,7 @@ async function listContacts() {
   try {
     const data = await promises.readFile(contactsPath, "utf-8");
 
-    console.table(JSON.parse(data));
+    return JSON.parse(data);
   } catch (error) {
     console.log(error);
   }
@@ -20,7 +20,7 @@ async function getContactById(contactId) {
     const data = await promises.readFile(contactsPath, "utf-8");
     const contactWithId = searchContactWithId(contactId, data);
 
-    console.table(contactWithId);
+    return contactWithId;
   } catch (error) {
     console.log(error);
   }
@@ -34,37 +34,59 @@ async function removeContact(contactId) {
     const contactWithId = searchContactWithId(contactId, data);
     const newContacts = filteredContacts(data, contactId);
 
-    await promises.writeFile(contactsPath, JSON.stringify(newContacts));
+    if (contactWithId) {
+      await promises.writeFile(contactsPath, JSON.stringify(newContacts));
+    }
 
-    console.log(`Contact with id ${contactId} has been deleted`);
-    console.table(contactWithId);
-    console.table(newContacts);
+    return contactWithId;
   } catch (error) {
     console.log(error);
   }
 }
 
-async function addContact(name, email, phone) {
-  if (!name && !email && !phone) return;
-
-  const newContact = {
-    id: Date.now(),
-    name,
-    email,
-    phone,
-  };
+async function updateContact(contactId, body) {
+  if (!contactId || !body) return;
 
   try {
     const data = await promises.readFile(contactsPath, "utf-8");
-    const dataWithNewContact = [...JSON.parse(data), newContact];
+    const contactWithId = searchContactWithId(contactId, data);
 
-    await promises.writeFile(contactsPath, JSON.stringify(dataWithNewContact));
+    if (!contactWithId) return null;
 
-    console.log("Contact has been created");
-    console.table(dataWithNewContact);
+    const newContacts = updateContacts(data, contactId, body);
+
+    await promises.writeFile(contactsPath, JSON.stringify(newContacts));
+
+    const newData = await promises.readFile(contactsPath, "utf-8");
+    const updateContactWithId = searchContactWithId(contactId, newData);
+
+    return updateContactWithId;
   } catch (error) {
     console.log(error);
   }
+}
+
+async function addContact(contact) {
+  if (!contact) return;
+
+  try {
+    const data = await promises.readFile(contactsPath, "utf-8");
+    const dataWithNewContact = [...JSON.parse(data), contact];
+
+    await promises.writeFile(contactsPath, JSON.stringify(dataWithNewContact));
+
+    const newData = await promises.readFile(contactsPath, "utf-8");
+
+    return findContact(newData, contact.id);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function updateContacts(contacts, contactId, body) {
+  return JSON.parse(contacts).map((contact) =>
+    contact.id === contactId ? { ...contact, ...body } : contact
+  );
 }
 
 function searchContactWithId(contactId, data) {
@@ -91,4 +113,5 @@ module.exports = {
   getContactById,
   removeContact,
   addContact,
+  updateContact,
 };
