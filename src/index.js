@@ -12,7 +12,8 @@ const main = async () => {
   app.use(express.json());
   app.use(cors({ origin: "http://localhost:4242" }));
   app.use(morgan("combined"));
-  app.use(contactRouter);
+
+  app.use("/api/v1", contactRouter);
 
   try {
     await mongoose.connect(process.env.MONGODB_CONNECTION_URL, {
@@ -35,3 +36,5 @@ const main = async () => {
     process.exit(1);
   }
 };
+
+main();
