@@ -1,7 +1,7 @@
 {
-  "name": "node-express",
+  "name": "node-mongodb",
   "version": "1.0.0",
-  "description": "Learn node express",
+  "description": "Learn mongodb mongoose",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -14,7 +14,9 @@
   "keywords": [
     "javascript",
     "node",
-    "express"
+    "express",
+    "mongodb",
+    "mongoose"
   ],
   "author": "Aleksey Shalkevych <aleksey.shalkevych@gmail.com>",
   "license": "ISC",
