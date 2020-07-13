@@ -1,7 +1,7 @@
 {
-  "name": "node-mongodb",
+  "name": "node-auth",
   "version": "1.0.0",
-  "description": "Learn mongodb mongoose",
+  "description": "Learn node auth with bcryptjs and jsonwebtoken",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -16,7 +16,10 @@
     "node",
     "express",
     "mongodb",
-    "mongoose"
+    "mongoose",
+    "bcryptjs",
+    "jwt",
+    "auth"
   ],
   "author": "Aleksey Shalkevych <aleksey.shalkevych@gmail.com>",
   "license": "ISC",
