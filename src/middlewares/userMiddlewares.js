@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const userRegisterValidation = (req, res, next) => {
+const userAuthValidation = (req, res, next) => {
   const registerValidationRules = Joi.object({
     email: Joi.string().required(),
     password: Joi.string().required(),
@@ -19,5 +19,5 @@ const userRegisterValidation = (req, res, next) => {
 };
 
 module.exports = {
-  userRegisterValidation,
+  userAuthValidation,
 };
