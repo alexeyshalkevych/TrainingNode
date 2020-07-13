@@ -1,6 +1,7 @@
 const userModel = require("./userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { userResponseСonversion } = require("../helpers/usersHelpers");
 
 const userRegister = async (req, res, next) => {
   try {
@@ -17,14 +18,7 @@ const userRegister = async (req, res, next) => {
 
     const newUser = await userModel.create({ email, password: hashPassword });
 
-    const userResponse = {
-      user: {
-        email: newUser.email,
-        subscription: newUser.subscription,
-      },
-    };
-
-    res.status(201).json(userResponse);
+    res.status(201).json(userResponseСonversion(newUser));
   } catch (error) {
     return next(error);
   }
@@ -52,15 +46,10 @@ const userLogin = async (req, res, next) => {
       token: newToken,
     });
 
-    res
-      .status(201)
-      .json({
-        token: newToken,
-        user: {
-          email: userUpdate.email,
-          subscription: userUpdate.subscription,
-        },
-      });
+    res.status(201).json({
+      token: newToken,
+      ...userResponseСonversion(userUpdate),
+    });
   } catch (error) {
     return next(error);
   }
