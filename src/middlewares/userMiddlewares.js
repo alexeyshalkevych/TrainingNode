@@ -35,6 +35,7 @@ const userAuthorization = async (req, res, next) => {
 
     const user = await userModel.findById(userId);
     if (!user || user.token !== token) {
+      res.status(401).send({ message: "Not authorized" });
       throw new UnauthorizedError("Not authorized");
     }
 

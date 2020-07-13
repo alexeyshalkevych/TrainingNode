@@ -55,7 +55,20 @@ const userLogin = async (req, res, next) => {
   }
 };
 
+const userLogOut = async (req, res, next) => {
+  try {
+    const { user } = req;
+
+    await userModel.findByIdAndUpdate(user._id, { token: null });
+
+    return res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   userRegister,
   userLogin,
+  userLogOut,
 };
