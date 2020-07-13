@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const contactRouter = require("./contacts/contactRouter");
+const userRouter = require("./users/userRouter");
 
 require("dotenv").config();
 
@@ -14,6 +15,7 @@ const startServer = async () => {
   app.use(morgan("combined"));
 
   app.use("/api/v1", contactRouter);
+  app.use("/api/v1", userRouter);
 
   try {
     await mongoose.connect(process.env.MONGODB_CONNECTION_URL, {
