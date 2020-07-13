@@ -54,8 +54,25 @@ const contactUpdateValidation = (req, res, next) => {
   return next();
 };
 
+const contactParamsValidation = (req, res, next) => {
+  const paramsValidationRules = Joi.object({
+    page: Joi.string(),
+    limit: Joi.string(),
+    sub: Joi.string(),
+  });
+
+  const validationResult = Joi.validate(req.query, paramsValidationRules);
+
+  if (validationResult.error) {
+    return res.status(404).send(validationResult.error);
+  }
+
+  return next();
+};
+
 module.exports = {
   contactIdValidation,
   contactCreateValidation,
   contactUpdateValidation,
+  contactParamsValidation,
 };
