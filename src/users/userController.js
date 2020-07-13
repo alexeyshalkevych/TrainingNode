@@ -67,8 +67,15 @@ const userLogOut = async (req, res, next) => {
   }
 };
 
+const getCurrentUser = (req, res, next) => {
+  const { user } = userResponseСonversion(req.user);
+
+  return res.status(200).send(user);
+};
+
 module.exports = {
   userRegister,
   userLogin,
   userLogOut,
+  getCurrentUser,
 };
