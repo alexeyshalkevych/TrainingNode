@@ -48,7 +48,25 @@ const userAuthorization = async (req, res, next) => {
   }
 };
 
+const userSubscriptionValidation = async (req, res, next) => {
+  const subscriptionValidationRules = Joi.object({
+    subscription: Joi.string().required(),
+  });
+
+  const subscriptionValidationResult = Joi.validate(
+    req.body,
+    subscriptionValidationRules
+  );
+
+  if (subscriptionValidationResult.error) {
+    return res.status(400).send(subscriptionValidationResult.error);
+  }
+
+  return next();
+};
+
 module.exports = {
   userAuthValidation,
   userAuthorization,
+  userSubscriptionValidation,
 };

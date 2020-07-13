@@ -73,9 +73,26 @@ const getCurrentUser = (req, res, next) => {
   return res.status(200).send(user);
 };
 
+const updateUserSubscription = async (req, res, next) => {
+  try {
+    const { user } = req;
+
+    await userModel.findByIdAndUpdate(
+      user._id,
+      { $set: req.body },
+      { upsert: true, runValidators: true }
+    );
+
+    return res.status(204).send();
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
 module.exports = {
   userRegister,
   userLogin,
   userLogOut,
   getCurrentUser,
+  updateUserSubscription,
 };
