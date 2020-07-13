@@ -4,3 +4,11 @@ exports.userResponseСonversion = userResponseСonversion = (userResponse) => ({
     subscription: userResponse.subscription,
   },
 });
+
+exports.UnauthorizedError = class UnauthorizedError extends Error {
+  constructor(message) {
+    super(message);
+
+    this.statusCode = 401;
+  }
+};
