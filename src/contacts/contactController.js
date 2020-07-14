@@ -2,7 +2,30 @@ const contactModel = require("./contactModel");
 
 const getContacts = async (req, res, next) => {
   try {
-    const contacts = await contactModel.find();
+    const { page, limit, sub } = req.query;
+
+    if (page && limit) {
+      const options = {
+        page,
+        limit,
+      };
+
+      const contacts = await contactModel.paginate({}, options);
+
+      return res.status(200).json(contacts.docs);
+    }
+
+    if (sub) {
+      const options = {
+        subscription: sub,
+      };
+
+      const contacts = await contactModel.find(options);
+
+      return res.status(200).json(contacts);
+    }
+
+    const contacts = await contactModel.find({});
 
     return res.status(200).json(contacts);
   } catch (error) {
