@@ -4,12 +4,14 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const contactRouter = require("./contacts/contactRouter");
 const userRouter = require("./users/userRouter");
+const path = require("path");
 
 require("dotenv").config();
 
 const startServer = async () => {
   const app = express();
 
+  app.use(express.static(path.join(__dirname, "/public")));
   app.use(express.json());
   app.use(cors({ origin: "http://localhost:4242" }));
   app.use(morgan("combined"));
