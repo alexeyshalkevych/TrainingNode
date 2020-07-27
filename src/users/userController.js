@@ -1,7 +1,14 @@
 const userModel = require("./userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { userResponseСonversion } = require("../helpers/usersHelpers");
+const path = require("path");
+const fs = require("fs").promises;
+const {
+  userResponseСonversion,
+  createUserAvatar,
+} = require("../helpers/usersHelpers");
+
+require("dotenv").config();
 
 const userRegister = async (req, res, next) => {
   try {
@@ -16,7 +23,19 @@ const userRegister = async (req, res, next) => {
 
     const hashPassword = await bcrypt.hash(password, saltLengthToGenerate);
 
-    const newUser = await userModel.create({ email, password: hashPassword });
+    const userAvatarPath = await createUserAvatar();
+
+    const { base } = path.parse(userAvatarPath);
+
+    const avatarURL = `http://localhost:${process.env.PORT}/images/${base}`;
+
+    const newUser = await userModel.create({
+      email,
+      password: hashPassword,
+      avatarURL,
+    });
+
+    await fs.unlink(userAvatarPath);
 
     res.status(201).json(userResponseСonversion(newUser));
   } catch (error) {
