@@ -34,7 +34,7 @@ const userAuthorization = async (req, res, next) => {
       userId = await jwt.verify(token, process.env.JWT_SECRET).id;
     } catch (error) {
       res.status(401).send({ message: "Not authorized" });
-      next(new UnauthorizedError("Not authorized"));
+      if (!process.env.SILENT) next(new UnauthorizedError("Not authorized"));
     }
 
     const user = await userModel.findById(userId);
