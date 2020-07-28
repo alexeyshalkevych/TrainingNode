@@ -108,10 +108,27 @@ const updateUserSubscription = async (req, res, next) => {
   }
 };
 
+const updateUserAvatar = async (req, res, next) => {
+  try {
+    const { file, user } = req;
+
+    const avatarURL = `http://localhost:${process.env.PORT}/images/${file.filename}`;
+
+    await userModel.findByIdAndUpdate(user._id, {
+      avatarURL,
+    });
+
+    return res.status(200).send({ avatarURL });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   userRegister,
   userLogin,
   userLogOut,
   getCurrentUser,
   updateUserSubscription,
+  updateUserAvatar,
 };
