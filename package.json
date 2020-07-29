@@ -1,7 +1,7 @@
 {
-  "name": "node-auth",
+  "name": "node-form-data",
   "version": "1.0.0",
-  "description": "Learn node auth with bcryptjs and jsonwebtoken",
+  "description": "Learn form-data with multer and unit tests with mocha, sinon, supertest etc",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -20,7 +20,12 @@
     "mongoose",
     "bcryptjs",
     "jwt",
-    "auth"
+    "auth",
+    "mocha",
+    "sinon",
+    "supertest",
+    "should",
+    "multer"
   ],
   "author": "Aleksey Shalkevych <aleksey.shalkevych@gmail.com>",
   "license": "ISC",
