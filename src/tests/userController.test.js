@@ -24,7 +24,7 @@ describe("Acceptance tests for users endpoint case", () => {
     context("when everything good", () => {
       const userId = ObjectId("5f1f31dd172af82b8cf91182");
       const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMWYzMWRkMTcyYWY4MmI4Y2Y5MTE4MiIsImlhdCI6MTU5NTkzODY5MCwiZXhwIjoxNTk2MDI1MDkwfQ._M6NN5tHBuhVsovFIEmkZBrU-6FaQR7EG0jGZd7P_GE";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMWYzMWRkMTcyYWY4MmI4Y2Y5MTE4MiIsImlhdCI6MTU5NjAyMzU4MCwiZXhwIjoxNTk2MTA5OTgwfQ.cfGHG0gVGYr4hKulTVejxOEkVk7Ym5JAS3R_ya4erLM";
 
       const avatarURL =
         "http://localhost:4242/images/b87a9175-0027-4b7f-8714-628b500660f0.png";
