@@ -1,8 +1,8 @@
-const startServer = require("../server");
+const startServer = require("../src/server");
 const request = require("supertest");
 const should = require("should");
-const { UnauthorizedError } = require("../helpers/usersHelpers");
-const userModel = require("../users/userModel");
+const { UnauthorizedError } = require("../src/helpers/usersHelpers");
+const userModel = require("../src/users/userModel");
 const {
   Types: { ObjectId },
 } = require("mongoose");

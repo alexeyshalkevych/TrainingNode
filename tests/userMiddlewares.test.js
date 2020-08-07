@@ -1,9 +1,9 @@
 const sinon = require("sinon");
-const { userAuthorization } = require("../middlewares/userMiddlewares");
-const userModel = require("../users/userModel");
+const { userAuthorization } = require("../src/middlewares/userMiddlewares");
+const userModel = require("../src/users/userModel");
 const jwt = require("jsonwebtoken");
 const should = require("should");
-const { UnauthorizedError } = require("../helpers/usersHelpers");
+const { UnauthorizedError } = require("../src/helpers/usersHelpers");
 const { assert } = require("joi");
 
 describe("Unit tests for users authorization case", () => {
