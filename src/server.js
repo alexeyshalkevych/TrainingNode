@@ -4,15 +4,17 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const contactRouter = require("./contacts/contactRouter");
 const userRouter = require("./users/userRouter");
+const path = require("path");
 
 require("dotenv").config();
 
 const startServer = async () => {
   const app = express();
 
+  app.use(express.static(path.join(__dirname, "/public")));
   app.use(express.json());
   app.use(cors({ origin: "http://localhost:4242" }));
-  app.use(morgan("combined"));
+  if (!process.env.SILENT) app.use(morgan("combined"));
 
   app.use("/api/v1", contactRouter);
   app.use("/api/v1", userRouter);
@@ -28,9 +30,9 @@ const startServer = async () => {
 
     const PORT = process.env.PORT || 5000;
 
-    app.listen(PORT, (err) =>
+    return app.listen(PORT, (err) =>
       err
-        ? console.warn(err)
+        ? console.error(err)
         : console.info(`Server has been started on port ${PORT}`)
     );
   } catch (error) {

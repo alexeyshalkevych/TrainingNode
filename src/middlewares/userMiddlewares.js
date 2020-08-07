@@ -1,6 +1,9 @@
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
+const fs = require("fs").promises;
+const path = require("path");
 const { UnauthorizedError } = require("../helpers/usersHelpers");
+const { imageMinify } = require("../helpers/avatarHelpers");
 const userModel = require("../users/userModel");
 
 const userAuthValidation = (req, res, next) => {
@@ -30,7 +33,8 @@ const userAuthorization = async (req, res, next) => {
     try {
       userId = await jwt.verify(token, process.env.JWT_SECRET).id;
     } catch (error) {
-      next(new UnauthorizedError("Not authorized"));
+      res.status(401).send({ message: "Not authorized" });
+      if (!process.env.SILENT) next(new UnauthorizedError("Not authorized"));
     }
 
     const user = await userModel.findById(userId);
@@ -65,8 +69,31 @@ const userSubscriptionValidation = async (req, res, next) => {
   return next();
 };
 
+const userAvatarMinify = async (req, res, next) => {
+  try {
+    const { filename, destination } = req.file;
+    const MINIFY = "src/public/images";
+    const IMAGE_DESTINATION = destination;
+
+    await imageMinify(IMAGE_DESTINATION, MINIFY);
+
+    await fs.unlink(req.file.path);
+
+    req.file = {
+      ...req.file,
+      path: path.join(MINIFY, filename),
+      destination: MINIFY,
+    };
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   userAuthValidation,
   userAuthorization,
   userSubscriptionValidation,
+  userAvatarMinify,
 };
