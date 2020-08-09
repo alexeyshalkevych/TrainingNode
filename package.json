@@ -1,7 +1,7 @@
 {
-  "name": "node-form-data",
+  "name": "node-send-email",
   "version": "1.0.0",
-  "description": "Learn form-data with multer and unit tests with mocha, sinon, supertest etc",
+  "description": "Learn send mail with sendgrid and nodemailer services",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -25,7 +25,9 @@
     "sinon",
     "supertest",
     "should",
-    "multer"
+    "multer",
+    "sendgrid",
+    "email"
   ],
   "author": "Aleksey Shalkevych <aleksey.shalkevych@gmail.com>",
   "license": "ISC",
