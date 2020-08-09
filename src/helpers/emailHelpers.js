@@ -13,7 +13,7 @@ const sendGridService = async (email, verificationToken) => {
     from: "alex.code.api@gmail.com",
     subject: "Email verefication in contacts services!",
     text: "Email verefication in contacts services!",
-    html: `<a href='http://localhost:${process.env.PORT}/users/verify/${verificationToken}'>Click here</a>`,
+    html: `<a href='http://localhost:${process.env.PORT}/api/v1/auth/verify/${verificationToken}'>Click here</a>`,
   };
 
   await sgMail.send(msg);

@@ -7,7 +7,7 @@ const {
   userResponseСonversion,
   createUserAvatar,
 } = require("../helpers/usersHelpers");
-
+const { sendVerificationEmail } = require("../helpers/emailHelpers");
 require("dotenv").config();
 
 const userRegister = async (req, res, next) => {
@@ -130,7 +130,7 @@ const verifyUserEmail = async (req, res, next) => {
   try {
     const { token } = req.params;
 
-    const userToVerify = userModel.findOne({ token });
+    const userToVerify = await userModel.findOne({ token });
 
     if (!userToVerify) {
       return res.status(404).send({ message: "User not found" });
@@ -160,4 +160,5 @@ module.exports = {
   getCurrentUser,
   updateUserSubscription,
   updateUserAvatar,
+  verifyUserEmail,
 };
