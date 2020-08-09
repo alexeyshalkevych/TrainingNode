@@ -8,7 +8,7 @@ const path = require("path");
 
 require("dotenv").config();
 
-const startServer = async () => {
+const startServer = async (config) => {
   const app = express();
 
   app.use(express.static(path.join(__dirname, "/public")));
@@ -20,11 +20,14 @@ const startServer = async () => {
   app.use("/api/v1", userRouter);
 
   try {
-    await mongoose.connect(process.env.MONGODB_CONNECTION_URL, {
-      useFindAndModify: false,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(
+      config.connection || process.env.MONGODB_CONNECTION_URL,
+      {
+        useFindAndModify: false,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
 
     console.log("Database connection successful");
 
