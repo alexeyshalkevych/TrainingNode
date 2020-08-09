@@ -35,6 +35,8 @@ const userRegister = async (req, res, next) => {
       avatarURL,
     });
 
+    await sendVerificationEmail(newUser);
+
     await fs.unlink(userAvatarPath);
 
     res.status(201).json(userResponseСonversion(newUser));
@@ -48,7 +50,7 @@ const userLogin = async (req, res, next) => {
     const { password, email } = req.body;
 
     const user = await userModel.findOne({ email });
-    if (!user) {
+    if (!user || user.status !== "Verified") {
       return res.status(401).send({ message: "Email or password is wrong" });
     }
 
@@ -119,6 +121,33 @@ const updateUserAvatar = async (req, res, next) => {
     });
 
     return res.status(200).send({ avatarURL });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const verifyUserEmail = async (req, res, next) => {
+  try {
+    const { token } = req.params;
+
+    const userToVerify = userModel.findOne({ token });
+
+    if (!userToVerify) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    await userModel.findByIdAndUpdate(
+      userToVerify._id,
+      {
+        status: "Verified",
+        verificationToken: null,
+      },
+      {
+        new: true,
+      }
+    );
+
+    return res.status(200).send({ message: "User successfully verified" });
   } catch (error) {
     return next(error);
   }
