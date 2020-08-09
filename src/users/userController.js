@@ -131,8 +131,8 @@ const verifyUserEmail = async (req, res, next) => {
     const { token } = req.params;
 
     const userToVerify = await userModel.findOne({ token });
-
-    if (!userToVerify) {
+    console.log(userToVerify);
+    if (!userToVerify.verificationToken) {
       return res.status(404).send({ message: "User not found" });
     }
 
