@@ -10,5 +10,5 @@
 
 ### Links for checks node tests tasks
 
-- [@ Unit tests for auth middleware](https://prnt.sc/tqi6ht)
-- [@ Acceptance tests for users avatars update endpoint](https://prnt.sc/tqi8gz)
+- [@ Unit tests for user auth middleware](https://prnt.sc/twlmo7)
+- [@ Acceptance tests for users avatars update endpoint](https://prnt.sc/twlmza)
