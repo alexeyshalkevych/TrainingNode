@@ -7,7 +7,7 @@ const {
   userResponseСonversion,
   createUserAvatar,
 } = require("../helpers/usersHelpers");
-
+const { sendVerificationEmail } = require("../helpers/emailHelpers");
 require("dotenv").config();
 
 const userRegister = async (req, res, next) => {
@@ -35,6 +35,8 @@ const userRegister = async (req, res, next) => {
       avatarURL,
     });
 
+    await sendVerificationEmail(newUser);
+
     await fs.unlink(userAvatarPath);
 
     res.status(201).json(userResponseСonversion(newUser));
@@ -48,11 +50,17 @@ const userLogin = async (req, res, next) => {
     const { password, email } = req.body;
 
     const user = await userModel.findOne({ email });
+
     if (!user) {
       return res.status(401).send({ message: "Email or password is wrong" });
     }
 
+    if (user.status !== "Verified") {
+      return res.status(401).send({ message: "User not verified" });
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) {
       return res.status(401).send({ message: "Email or password is wrong" });
     }
@@ -124,6 +132,33 @@ const updateUserAvatar = async (req, res, next) => {
   }
 };
 
+const verifyUserEmail = async (req, res, next) => {
+  try {
+    const { token } = req.params;
+
+    const userToVerify = await userModel.findOne({ token });
+    console.log(userToVerify);
+    if (!userToVerify.verificationToken) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    await userModel.findByIdAndUpdate(
+      userToVerify._id,
+      {
+        status: "Verified",
+        verificationToken: null,
+      },
+      {
+        new: true,
+      }
+    );
+
+    return res.status(200).send({ message: "User successfully verified" });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   userRegister,
   userLogin,
@@ -131,4 +166,5 @@ module.exports = {
   getCurrentUser,
   updateUserSubscription,
   updateUserAvatar,
+  verifyUserEmail,
 };

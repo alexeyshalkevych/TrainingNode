@@ -32,3 +32,9 @@ exports.createUserAvatar = createUserAvatar = async () => {
 
   return avatarPath;
 };
+
+exports.createUserVerificationToken = createUserVerificationToken = () => {
+  const verificationToken = uuidv4();
+
+  return verificationToken;
+};

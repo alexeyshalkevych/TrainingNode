@@ -10,6 +10,7 @@ const {
   getCurrentUser,
   updateUserSubscription,
   updateUserAvatar,
+  verifyUserEmail,
 } = require("./userController");
 const {
   userAuthValidation,
@@ -30,6 +31,7 @@ const uploadAvatar = multer({ storage });
 
 usersRouter.get("/users/current", userAuthorization, getCurrentUser);
 
+usersRouter.get("/auth/verify/:verificationToken", verifyUserEmail);
 usersRouter.post("/auth/register", userAuthValidation, userRegister);
 usersRouter.post("/auth/login", userAuthValidation, userLogin);
 usersRouter.post("/auth/logout", userAuthorization, userLogOut);
