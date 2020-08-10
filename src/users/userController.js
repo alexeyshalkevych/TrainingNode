@@ -50,11 +50,17 @@ const userLogin = async (req, res, next) => {
     const { password, email } = req.body;
 
     const user = await userModel.findOne({ email });
-    if (!user || user.status !== "Verified") {
+
+    if (!user) {
       return res.status(401).send({ message: "Email or password is wrong" });
     }
 
+    if (user.status !== "Verified") {
+      return res.status(401).send({ message: "User not verified" });
+    }
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) {
       return res.status(401).send({ message: "Email or password is wrong" });
     }
