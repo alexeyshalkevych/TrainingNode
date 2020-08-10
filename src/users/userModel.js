@@ -11,7 +11,14 @@ const userSchema = new Schema({
     enum: ["free", "pro", "premium"],
     default: "free",
   },
+  status: {
+    type: String,
+    required: true,
+    enum: ["Verified", "Created"],
+    default: "Created",
+  },
   token: { type: String, required: false },
+  verificationToken: { type: String, required: false },
 });
 
 const userModel = mongoose.model("User", userSchema);
