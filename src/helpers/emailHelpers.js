@@ -24,8 +24,8 @@ const sendGridService = async (email, verificationToken) => {
   const msg = {
     to: email,
     from: "alex.code.api@gmail.com",
-    subject: "Email verefication in contacts services!",
-    text: "Email verefication in contacts services!",
+    subject: "Email verification in contacts services!",
+    text: "Email verification in contacts services!",
     html: htmlForSendGridService,
   };
 
