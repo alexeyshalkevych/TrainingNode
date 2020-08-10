@@ -27,8 +27,7 @@ describe("Acceptance tests for users endpoint case", () => {
         subscription: "free",
         email: "alex.code@gmail.com",
         password: hashPassword,
-        avatarURL:
-          "http://localhost:4242/images/b87a9175-0027-4b7f-8714-628b500660f0.png",
+        avatarURL: `http://localhost:4242/images/b87a9175-0027-4b7f-8714-628b500660f0.png`,
         token,
       });
     });
@@ -41,8 +40,8 @@ describe("Acceptance tests for users endpoint case", () => {
     });
 
     context("when everything good", () => {
-      const avatarURL =
-        "http://localhost:4242/images/b87a9175-0027-4b7f-8714-628b500660f0.png";
+      const imageFileName = `b87a9175-0027-4b7f-8714-628b500660f0.png`;
+      const avatarURL = `http://localhost:4242/images/${imageFileName}`;
 
       before(async () => {
         await userModel.findByIdAndUpdate(userId, {
@@ -54,10 +53,7 @@ describe("Acceptance tests for users endpoint case", () => {
         await request(server)
           .patch("/api/v1/users/avatars")
           .set("Authorization", `Bearer ${token}`)
-          .attach(
-            "avatar",
-            `src/public/images/b87a9175-0027-4b7f-8714-628b500660f0.png`
-          )
+          .attach("avatar", `src/public/images/${imageFileName}`)
           .expect(200);
       });
 
@@ -65,10 +61,7 @@ describe("Acceptance tests for users endpoint case", () => {
         await request(server)
           .patch("/api/v1/users/avatars")
           .set("Authorization", `Bearer ${token}`)
-          .attach(
-            "avatar",
-            "src/public/images/b87a9175-0027-4b7f-8714-628b500660f0.png"
-          )
+          .attach("avatar", `src/public/images/${imageFileName}`)
           .expect("Content-Type", /json/);
       });
 
@@ -76,10 +69,7 @@ describe("Acceptance tests for users endpoint case", () => {
         const res = await request(server)
           .patch("/api/v1/users/avatars")
           .set("Authorization", `Bearer ${token}`)
-          .attach(
-            "avatar",
-            "src/public/images/b87a9175-0027-4b7f-8714-628b500660f0.png"
-          );
+          .attach("avatar", `src/public/images/${imageFileName}`);
 
         const user = await userModel.findOne({ ...res.body });
 
