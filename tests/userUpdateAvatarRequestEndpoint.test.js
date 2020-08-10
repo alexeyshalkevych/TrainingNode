@@ -3,7 +3,7 @@ const request = require("supertest");
 const should = require("should");
 const { UnauthorizedError } = require("../src/helpers/usersHelpers");
 const userModel = require("../src/users/userModel");
-
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -19,12 +19,14 @@ describe("Acceptance tests for users endpoint case", () => {
         connection: process.env.MONGODB_CONNECTION_URL_FOR_TESTS,
       });
 
+      const password = `jrH8cFft=33>":HkKb?L`;
+      const hashPassword = await bcrypt.hash(password, 6);
+
       await userModel.create({
         _id: userId,
         subscription: "free",
         email: "alex.code@gmail.com",
-        password:
-          "$2a$06$iqoFleFNyRZG/P/7Xh0i2O5hFOZXADsl0G9MvgVGJjW52V.wu4zQK",
+        password: hashPassword,
         avatarURL:
           "http://localhost:4242/images/b87a9175-0027-4b7f-8714-628b500660f0.png",
         token,
