@@ -134,10 +134,10 @@ const updateUserAvatar = async (req, res, next) => {
 
 const verifyUserEmail = async (req, res, next) => {
   try {
-    const { token } = req.params;
+    const { verificationToken } = req.params;
 
-    const userToVerify = await userModel.findOne({ token });
-    console.log(userToVerify);
+    const userToVerify = await userModel.findOne({ verificationToken });
+
     if (!userToVerify.verificationToken) {
       return res.status(404).send({ message: "User not found" });
     }

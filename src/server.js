@@ -13,7 +13,7 @@ const startServer = async (config) => {
 
   app.use(express.static(path.join(__dirname, "/public")));
   app.use(express.json());
-  app.use(cors({ origin: "http://localhost:4242" }));
+  app.use(cors({ origin: "http://localhost:3000" }));
   if (!process.env.SILENT) app.use(morgan("combined"));
 
   app.use("/api/v1", contactRouter);
